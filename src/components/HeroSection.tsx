@@ -10,14 +10,14 @@ const HeroSection = () => {
     <section id="hero" className=" min-h-screen flex items-center pt-20">
       <div className="max-w-[1280px] mx-auto px-4 md:px-10 w-full py-12 md:py-20">
         <div ref={ref} className="flex flex-col lg:flex-row gap-12 items-center">
-          <div className="flex-1 flex flex-col gap-6 text-center lg:text-left">
+          <div className="flex-1 flex flex-col gap-4 text-center lg:text-left">
             <motion.h1
               className="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-[-0.033em] text-foreground"
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
-              Turn Any Drawer{" "}
+              Turn Your Drawer{" "}
               <br className="hidden md:block" />
               Into a <span className="text-gradient">Smart Vault.</span>
             </motion.h1>
