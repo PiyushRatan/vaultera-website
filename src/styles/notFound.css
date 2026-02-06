@@ -12,21 +12,21 @@
 }
 
 .not-found-heading {
-  margin-bottom: 1rem;
-  font-size: 2.25rem;
-  font-weight: 700;
+  margin-bottom: var(--space-4);
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
 }
 
 .not-found-message {
-  margin-bottom: 1rem;
-  font-size: 1.25rem;
+  margin-bottom: var(--space-4);
+  font-size: var(--font-size-xl);
   color: var(--muted-foreground);
 }
 
 .not-found-link {
   color: var(--primary);
   text-decoration: underline;
-  transition: color 0.2s ease;
+  transition: color var(--transition-fast);
 }
 
 .not-found-link:hover {

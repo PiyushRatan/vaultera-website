@@ -8,10 +8,9 @@ const PrivacySection = () => {
   const { ref, inView } = useInView();
 
   return (
-    <section id="privacy" className="privacy-section">
+    <section id="privacy" className="privacy-section" ref={ref}>
       <motion.div
         className="privacy-image-wrapper"
-        ref={ref}
         initial={{ opacity: 0, x: -40, rotate: -5 }}
         animate={inView ? { opacity: 1, x: 0, rotate: -2 } : {}}
         transition={{ duration: 0.7 }}
@@ -54,22 +53,57 @@ const PrivacySection = () => {
           as="h2"
           className="text-foreground text-3xl md:text-4xl font-bold mb-6"
         />
-        <div className="privacy-content-text">
-          <p>
+        <motion.div 
+          className="privacy-content-text"
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.15,
+                delayChildren: 0.4
+              }
+            }
+          }}
+        >
+          <motion.p
+            variants={{
+              hidden: { opacity: 0, y: 10 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+            }}
+          >
             In a world of connected devices, privacy is our top priority. Vaultera operates on a strictly local-first architecture.
-          </p>
-          <p>
+          </motion.p>
+          <motion.p
+            variants={{
+              hidden: { opacity: 0, y: 10 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+            }}
+          >
             Your fingerprint data and access logs never leave the physical lock. We use banking-grade encryption for local communication, ensuring that not even we can access your vault.
-          </p>
-          <p className="privacy-content-highlight">
+          </motion.p>
+          <motion.p 
+            className="privacy-content-highlight"
+            variants={{
+              hidden: { opacity: 0, y: 10 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+            }}
+          >
             No cloud accounts. No recurring subscriptions. Just secure hardware.
-          </p>
-        </div>
-        <div className="privacy-content-link">
+          </motion.p>
+        </motion.div>
+        <motion.div 
+          className="privacy-content-link"
+          initial={{ opacity: 0, y: 10 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.7 }}
+        >
           <a className="privacy-content-link-btn" href="#">
             Read our Transparency Report <ExternalLink className="w-4 h-4" />
           </a>
-        </div>
+        </motion.div>
       </motion.div>
     </section>
   );

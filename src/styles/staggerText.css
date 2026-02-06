@@ -9,14 +9,14 @@
 }
 
 .stagger-text-highlight {
-  background: linear-gradient(to right, #06b6d4, #3b82f6);
+  background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .text-gradient {
-  background: linear-gradient(to right, #06b6d4, #3b82f6);
+  background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

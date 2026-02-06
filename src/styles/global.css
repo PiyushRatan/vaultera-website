@@ -1,6 +1,4 @@
-/* Global CSS Variables and Base Styles */
-
-/* Import all component CSS files FIRST */
+/* Import all component CSS files  */
 @import url("./heroSection.css");
 @import url("./navbar.css");
 @import url("./ctaSection.css");
@@ -15,77 +13,6 @@
 @import url("./scrollProgress.css");
 @import url("./pages.css");
 @import url("./notFound.css");
-
-:root {
-  --foreground: hsl(0 0% 100%);
-  --foreground-rgb: 255 255 255;
-  --background: hsl(0 0% 7%);
-  --background-rgb: 18 18 18;
-  --card: hsl(0 0% 10%);
-  --surface-elevated: hsl(0 0% 12%);
-  --primary: hsl(211 100% 50%);
-  --primary-rgb: 0 120 255;
-  --primary-foreground: hsl(210 50% 98%);
-  --primary-glow: hsl(211 90% 60%);
-  --secondary: hsl(0 0% 17%);
-  --secondary-rgb: 43 43 43;
-  --muted: hsl(0 0% 30%);
-  --muted-foreground: hsl(0 0% 65%);
-  --muted-foreground-rgb: 166 166 166;
-  --border: hsl(0 0% 17%);
-  --border-rgb: 43 43 43;
-  --success: hsl(142 76% 36%);
-}
-
-/* Base Styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-    "Droid Sans", "Helvetica Neue", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Typography Utilities */
-.text-foreground {
-  color: var(--foreground);
-}
-
-.text-muted-foreground {
-  color: var(--muted-foreground);
-}
-
-.text-primary {
-  color: var(--primary);
-}
-
-/* Responsive utilities for hidden elements */
-@media (min-width: 768px) {
-  .hidden {
-    display: none;
-  }
-  
-  .md\\:block {
-    display: block;
-  }
-}
-
-@media (max-width: 767px) {
-  .md\\:hidden {
-    display: none;
-  }
-}
 
 /* Links */
 a {
@@ -110,40 +37,6 @@ button {
 
 @media (min-width: 768px) {
   .container {
-    padding: 0 2.5rem;
+    padding: 0 var(--space-10);
   }
-}
-
-/* Layout utilities */
-.flex {
-  display: flex;
-}
-
-.flex-col {
-  flex-direction: column;
-}
-
-.items-center {
-  align-items: center;
-}
-
-.justify-center {
-  justify-content: center;
-}
-
-.gap-4 {
-  gap: 1rem;
-}
-
-/* Text utilities */
-.text-center {
-  text-align: center;
-}
-
-.font-bold {
-  font-weight: 700;
-}
-
-.font-black {
-  font-weight: 900;
 }

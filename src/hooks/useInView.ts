@@ -13,12 +13,12 @@ export function useInView(options?: IntersectionObserverInit) {
         // Set to true when entering view, false when leaving
         setInView(entry.isIntersecting);
       },
-      { threshold: 0.15, ...options }
+      { threshold: 0.05, rootMargin: "100px 0px", ...options }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [options]);
 
   return { ref, inView };
 }

@@ -9,15 +9,11 @@
   transform-origin: left;
   transform: scaleX(0);
 
-  background: linear-gradient(
-    90deg,
-    hsl(210 100% 60%),
-    hsl(260 100% 65%)
-  );
+  background: var(--gradient-primary);
 
   z-index: 9999;
   pointer-events: none;
 
-  transition: transform 0.12s linear;
-  box-shadow: 0 0 8px hsl(260 100% 65% / 0.35);
+  transition: transform var(--transition-fast) linear;
+  box-shadow: var(--shadow-primary-sm);
 }
