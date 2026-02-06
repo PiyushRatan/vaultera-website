@@ -8,8 +8,8 @@ const plans = [
   {
     name: "Bronze",
     nameColor: "text-muted-foreground",
-    price: 49,
-    originalPrice: 69,
+    price: 5499,
+    originalPrice: 4469,
     unit: "/unit",
     desc: "Essential security for any standard drawer.",
     features: [
@@ -22,8 +22,8 @@ const plans = [
   {
     name: "Silver",
     nameColor: "text-primary",
-    price: 79,
-    originalPrice: 119,
+    price: 7699,
+    originalPrice: 6569,
     unit: "/unit",
     desc: "Smart connectivity for seamless daily use.",
     features: [
@@ -37,8 +37,8 @@ const plans = [
   {
     name: "Gold",
     nameColor: "text-amber-500",
-    price: 129,
-    originalPrice: 199,
+    price: 11299,
+    originalPrice: 10999,
     unit: "/unit",
     desc: "Ultimate protection with pro-grade encryption.",
     features: [
@@ -78,7 +78,7 @@ const PricingCard = ({ plan, index, inView }: { plan: typeof plans[0]; index: nu
             {inView && (
               <motion.div className="flex items-baseline gap-2" key="price">
                 <span className="relative text-lg text-muted-foreground line-through decoration-destructive/60">
-                  ${plan.originalPrice}
+                  ₹{plan.originalPrice}
                   <motion.span
                     className="absolute left-0 top-1/2 h-[2px] bg-destructive/60"
                     initial={{ width: 0 }}
@@ -92,7 +92,7 @@ const PricingCard = ({ plan, index, inView }: { plan: typeof plans[0]; index: nu
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 + index * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
                 >
-                  ${plan.price}
+                  ₹{plan.price}
                 </motion.span>
                 <span className="text-muted-foreground text-sm">{plan.unit}</span>
               </motion.div>

@@ -1,4 +1,3 @@
-import { Lock } from "lucide-react";
 
 const Footer = () => (
   <footer className="w-full border-t border-border py-12 bg-surface-elevated">
@@ -6,7 +5,7 @@ const Footer = () => (
       <div className="flex flex-col md:flex-row justify-between items-start gap-10">
         <div className="flex flex-col gap-4 max-w-xs">
           <div className="flex items-center gap-2">
-            <Lock className="w-5 h-5 text-primary" />
+            <img className="w-12 h-12 text-primary" src="/logo.png" alt="Vaultera Logo" />
             <span className="text-foreground text-xl font-bold">Vaultera</span>
           </div>
           <p className="text-muted-foreground text-sm leading-relaxed">

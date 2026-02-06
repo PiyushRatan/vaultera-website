@@ -1,8 +1,8 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import { useActiveSection } from "@/hooks/useActiveSection";
-import { Lock } from "lucide-react";
+
 
 const NAV_LINKS = [
   { label: "How It Works", href: "#how-it-works" },
@@ -59,16 +59,71 @@ const Navbar = () => {
   const { scrollDirection, scrollY } = useScrollDirection();
   const activeSection = useActiveSection(useMemo(() => SECTION_IDS, []));
   const [mobileOpen, setMobileOpen] = useState(false);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   const isScrolled = scrollY > 50;
+  // keep nav from hiding while mobile menu is open
   const isHidden = scrollDirection === "down" && scrollY > 200 && !mobileOpen;
+
+  // Cleanup observer on unmount
+  useEffect(() => {
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
+      }
+    };
+  }, []);
+
+  // helper: scroll to selector smoothly and close mobile menu only when the target is visible
+  const scrollToAndClose = (href: string) => {
+    // disconnect any existing observer
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+      observerRef.current = null;
+    }
+
+    const id = href.replace("#", "");
+    const target = document.getElementById(id) || document.querySelector(href);
+
+    if (!target) {
+      // fallback: no target found, just close menu
+      setMobileOpen(false);
+      return;
+    }
+
+    // Create an observer that will close the menu when the target is sufficiently visible
+    const onIntersect: IntersectionObserverCallback = (entries, obs) => {
+      const entry = entries[0];
+      if (entry && entry.isIntersecting) {
+        obs.disconnect();
+        observerRef.current = null;
+        // give a tiny delay to ensure visual settling, then close
+        setTimeout(() => setMobileOpen(false), 50);
+      }
+    };
+
+    // threshold 0.6 works well for "in view" detection; tweak if necessary
+    const obs = new IntersectionObserver(onIntersect, { threshold: 0.6 });
+    observerRef.current = obs;
+    obs.observe(target as Element);
+
+    // Start smooth scroll
+    try {
+      (target as HTMLElement).scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (e) {
+      // If for some reason scrollIntoView fails, close the menu after a small delay
+      setTimeout(() => setMobileOpen(false), 200);
+    }
+  };
 
   return (
     <motion.nav
       className="fixed top-0 left-0 right-0 z-50"
       initial={false}
       animate={{
-        y: isHidden ? -100 : 0,
+        // prevent nav from sliding away while mobile menu is open
+        y: mobileOpen ? 0 : isHidden ? -100 : 0,
         paddingTop: isScrolled ? 8 : 12,
         paddingBottom: isScrolled ? 8 : 12,
       }}
@@ -86,9 +141,9 @@ const Navbar = () => {
             whileHover={{ rotate: -12 }}
             transition={{ type: "spring", stiffness: 300, damping: 15 }}
           >
-            <Lock className="w-5 h-5 text-primary" />
+            <img className="w-12 h-12 text-primary" src="/logo.png" alt="Vaultera Logo" />
           </motion.div>
-          <span className="text-foreground text-lg font-bold tracking-tight">Vaultera</span>
+          <span className="text-foreground text-lg font-bold tracking-tight">VaulTera</span>
         </a>
 
         {/* Desktop nav */}
@@ -109,7 +164,11 @@ const Navbar = () => {
                       transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     />
                   )}
-                  <span className={`relative z-10 ${isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
+                  <span
+                    className={`relative z-10 ${
+                      isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
                     {link.label}
                   </span>
                 </a>
@@ -130,7 +189,7 @@ const Navbar = () => {
         {/* Mobile hamburger */}
         <button
           className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-secondary transition-colors"
-          onClick={() => setMobileOpen(!mobileOpen)}
+          onClick={() => setMobileOpen((s) => !s)}
           aria-label="Toggle menu"
         >
           <HamburgerIcon open={mobileOpen} />
@@ -141,20 +200,24 @@ const Navbar = () => {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="md:hidden overflow-hidden border-t border-border mt-2"
+            className="md:hidden overflow-hidden border-t border-border mt-2 z-50 relative"
             variants={mobileMenuVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
           >
-            <div className="px-4 py-5 flex flex-col gap-1 bg-background">
+            <div className="px-4 py-5 flex flex-col gap-1 bg-background pointer-events-auto">
               {NAV_LINKS.map((link) => {
                 const isActive = activeSection === link.href.slice(1);
+                // include activeSection in key so the link re-renders when activeSection changes
                 return (
                   <motion.a
-                    key={link.href}
+                    key={`${link.href}-${activeSection}`}
                     href={link.href}
-                    onClick={() => setMobileOpen(false)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToAndClose(link.href);
+                    }}
                     variants={mobileLinkVariants}
                     className={`text-base font-medium px-4 py-3 rounded-xl transition-colors ${
                       isActive
@@ -168,7 +231,10 @@ const Navbar = () => {
               })}
               <motion.a
                 href="#cta"
-                onClick={() => setMobileOpen(false)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToAndClose("#cta");
+                }}
                 variants={mobileLinkVariants}
                 className="btn-primary px-5 py-3.5 text-sm text-center mt-3 rounded-xl"
               >
