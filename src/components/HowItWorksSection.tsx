@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Wrench, Fingerprint, ShieldCheck, ArrowRight } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
 import StaggerText from "./StaggerText";
+import "@/styles/howItWorksSection.css";
 
 const steps = [
   {
@@ -25,36 +26,36 @@ const HowItWorksSection = () => {
   const { ref, inView } = useInView();
 
   return (
-    <section id="how-it-works" className=" w-full max-w-[1280px] mx-auto px-4 md:px-10 py-20">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-        <div className="max-w-xl">
-          <p className="text-primary font-bold uppercase tracking-wider text-sm mb-2">Simple Setup</p>
+    <section id="how-it-works" className="how-it-works-section">
+      <div className="how-it-works-header">
+        <div className="how-it-works-title-section">
+          <p className="how-it-works-label">Simple Setup</p>
           <StaggerText
             text="Effortless security in three steps."
             as="h3"
             className="text-foreground text-3xl md:text-4xl font-bold leading-tight"
           />
         </div>
-        <a className="hidden md:flex items-center gap-1 text-primary font-semibold hover:text-primary-glow transition-colors" href="#">
+        <a className="how-it-works-doc-link" href="#">
           Read full documentation <ArrowRight className="w-4 h-4" />
         </a>
       </div>
 
-      <div ref={ref} className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+      <div ref={ref} className="how-it-works-steps">
         {steps.map((step, i) => (
           <motion.div
             key={step.title}
-            className="card-surface-hover flex flex-col gap-4 p-6 shadow-lg"
+            className="how-it-works-card card-surface-hover"
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: i * 0.15 }}
           >
-            <div className="w-12 h-12 rounded-lg bg-primary/15 flex items-center justify-center text-primary mb-2 glow-primary">
+            <div className="how-it-works-icon glow-primary">
               <step.icon className="w-6 h-6" />
             </div>
             <div>
-              <h4 className="text-foreground text-xl font-bold mb-2">{step.title}</h4>
-              <p className="text-muted-foreground leading-relaxed">{step.desc}</p>
+              <h4 className="how-it-works-card-title">{step.title}</h4>
+              <p className="how-it-works-card-desc">{step.desc}</p>
             </div>
           </motion.div>
         ))}

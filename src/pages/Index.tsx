@@ -8,13 +8,14 @@ import UseCasesSection from "@/components/UseCasesSection";
 import PrivacySection from "@/components/PrivacySection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
+import "@/styles/pages.css";
 
 const Index = () => {
   return (
-    <div className="relative flex min-h-screen w-full flex-col">
+    <div className="page-container">
       <ScrollProgress />
       <Navbar />
-      <main className="flex-1 flex flex-col items-center bg-background">
+      <main className="page-main">
         <HeroSection />
         <VideoSection />
         <HowItWorksSection />

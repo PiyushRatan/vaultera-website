@@ -2,6 +2,8 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import { useActiveSection } from "@/hooks/useActiveSection";
+import "@/styles/navbar.css";
+import "@/styles/buttons.css";
 
 
 const NAV_LINKS = [
@@ -14,19 +16,19 @@ const NAV_LINKS = [
 const SECTION_IDS = ["hero", "how-it-works", "pricing", "use-cases", "privacy"];
 
 const HamburgerIcon = ({ open }: { open: boolean }) => (
-  <div className="relative w-6 h-5 flex flex-col justify-center items-center">
+  <div className="hamburger-icon">
     <motion.span
-      className="absolute h-[2px] w-6 bg-foreground rounded-full"
+      className="hamburger-line"
       animate={open ? { rotate: 45, y: 0 } : { rotate: 0, y: -6 }}
       transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
     />
     <motion.span
-      className="absolute h-[2px] w-6 bg-foreground rounded-full"
+      className="hamburger-line"
       animate={open ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
       transition={{ duration: 0.2 }}
     />
     <motion.span
-      className="absolute h-[2px] w-6 bg-foreground rounded-full"
+      className="hamburger-line"
       animate={open ? { rotate: -45, y: 0 } : { rotate: 0, y: 6 }}
       transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
     />
@@ -119,7 +121,7 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      className="fixed top-0 left-0 right-0 z-50"
+      className="navbar navbar-backdrop"
       initial={false}
       animate={{
         // prevent nav from sliding away while mobile menu is open
@@ -129,45 +131,41 @@ const Navbar = () => {
       }}
       transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
       style={{
-        backgroundColor: "hsl(0 0% 7% / 0.92)",
-        backdropFilter: "blur(16px)",
         borderBottom: isScrolled ? "1px solid hsl(0 0% 17%)" : "1px solid transparent",
       }}
     >
-      <div className="max-w-[1280px] mx-auto px-4 md:px-10 flex items-center justify-between">
+      <div className="navbar-wrapper">
         {/* Logo */}
-        <a href="#hero" className="flex items-center gap-2 group">
+        <a href="#hero" className="navbar-logo">
           <motion.div
             whileHover={{ rotate: -12 }}
             transition={{ type: "spring", stiffness: 300, damping: 15 }}
           >
-            <img className="w-12 h-12 text-primary" src="/logo.png" alt="Vaultera Logo" />
+            <img className="navbar-logo-img" src="/logo.png" alt="Vaultera Logo" />
           </motion.div>
-          <span className="text-foreground text-lg font-bold tracking-tight">VaulTera</span>
+          <span className="navbar-logo-text">VaulTera</span>
         </a>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-8">
-          <div className="flex items-center gap-1 relative">
+        <div className="navbar-desktop">
+          <div className="navbar-links">
             {NAV_LINKS.map((link) => {
               const isActive = activeSection === link.href.slice(1);
               return (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="relative px-4 py-2 text-sm font-medium transition-colors duration-200"
+                  className="navbar-link"
                 >
                   {isActive && (
                     <motion.div
                       layoutId="nav-pill"
-                      className="absolute inset-0 rounded-lg bg-secondary"
+                      className="navbar-link-bg"
                       transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     />
                   )}
                   <span
-                    className={`relative z-10 ${
-                      isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
-                    }`}
+                    className={`navbar-link-text ${isActive ? "active" : ""}`}
                   >
                     {link.label}
                   </span>
@@ -177,7 +175,7 @@ const Navbar = () => {
           </div>
           <motion.a
             href="#cta"
-            className="btn-primary px-5 py-2 text-sm"
+            className="btn-primary navbar-btn"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
             transition={{ type: "spring", stiffness: 400, damping: 20 }}
@@ -188,7 +186,7 @@ const Navbar = () => {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-secondary transition-colors"
+          className="navbar-hamburger"
           onClick={() => setMobileOpen((s) => !s)}
           aria-label="Toggle menu"
         >
@@ -200,13 +198,13 @@ const Navbar = () => {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="md:hidden overflow-hidden border-t border-border mt-2 z-50 relative"
+            className="navbar-mobile open"
             variants={mobileMenuVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
           >
-            <div className="px-4 py-5 flex flex-col gap-1 bg-background pointer-events-auto">
+            <div className="navbar-mobile-content">
               {NAV_LINKS.map((link) => {
                 const isActive = activeSection === link.href.slice(1);
                 // include activeSection in key so the link re-renders when activeSection changes
@@ -219,11 +217,7 @@ const Navbar = () => {
                       scrollToAndClose(link.href);
                     }}
                     variants={mobileLinkVariants}
-                    className={`text-base font-medium px-4 py-3 rounded-xl transition-colors ${
-                      isActive
-                        ? "text-foreground bg-secondary"
-                        : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
-                    }`}
+                    className={`navbar-mobile-link ${isActive ? "active" : ""}`}
                   >
                     {link.label}
                   </motion.a>
@@ -236,7 +230,7 @@ const Navbar = () => {
                   scrollToAndClose("#cta");
                 }}
                 variants={mobileLinkVariants}
-                className="btn-primary px-5 py-3.5 text-sm text-center mt-3 rounded-xl"
+                className="btn-primary navbar-mobile-btn"
               >
                 Book Upgrade
               </motion.a>

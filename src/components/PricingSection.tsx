@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle, XCircle } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
 import StaggerText from "./StaggerText";
+import "@/styles/pricingSection.css";
 
 const plans = [
   {
@@ -56,61 +57,57 @@ const PricingCard = ({ plan, index, inView }: { plan: typeof plans[0]; index: nu
 
   return (
     <motion.div
-      className={`flex flex-col p-8 rounded-3xl border transition-all duration-300 relative ${
-        plan.popular
-          ? "bg-card border-2 border-primary glow-primary-strong scale-100 md:scale-105 z-10"
-          : "bg-card border-border hover:border-muted-foreground/30"
-      }`}
+      className={`pricing-card ${plan.popular ? "popular" : ""}`}
       initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.12 }}
     >
       {plan.popular && (
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-widest py-1.5 px-4 rounded-full">
+        <div className="pricing-badge">
           Most Popular
         </div>
       )}
 
-      <div className="mb-8">
-        <h4 className={`font-semibold mb-1 ${plan.nameColor}`}>{plan.name}</h4>
-        <div className="flex items-baseline gap-2">
+      <div className="pricing-header-info">
+        <h4 className={`pricing-plan-name ${plan.nameColor}`}>{plan.name}</h4>
+        <div className="pricing-price-container">
           <AnimatePresence mode="wait">
             {inView && (
               <motion.div className="flex items-baseline gap-2" key="price">
-                <span className="relative text-lg text-muted-foreground line-through decoration-destructive/60">
+                <span className="pricing-original-price">
                   ₹{plan.originalPrice}
                   <motion.span
-                    className="absolute left-0 top-1/2 h-[2px] bg-destructive/60"
+                    className="pricing-original-price-line"
                     initial={{ width: 0 }}
                     animate={{ width: "100%" }}
                     transition={{ duration: 0.6, delay: 0.5 + index * 0.12 }}
                   />
                 </span>
                 <motion.span
-                  className="text-4xl font-bold text-foreground"
+                  className="pricing-price"
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 + index * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
                 >
                   ₹{plan.price}
                 </motion.span>
-                <span className="text-muted-foreground text-sm">{plan.unit}</span>
+                <span className="pricing-unit">{plan.unit}</span>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
-        <p className="text-muted-foreground text-sm mt-3">{plan.desc}</p>
+        <p className="pricing-card-description">{plan.desc}</p>
       </div>
 
-      <div className="space-y-4 mb-10 flex-1">
+      <div className="pricing-features">
         {plan.features.map((f) => (
-          <div key={f.text} className={`flex items-start gap-3 ${!f.included ? "opacity-30" : ""}`}>
+          <div key={f.text} className={`pricing-feature ${!f.included ? "disabled" : ""}`}>
             {f.included ? (
-              <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+              <CheckCircle className="pricing-feature-icon" />
             ) : (
-              <XCircle className="w-5 h-5 text-muted-foreground shrink-0 mt-0.5" />
+              <XCircle className="pricing-feature-icon" />
             )}
-            <span className={`text-sm ${f.included ? "text-muted-foreground" : "text-muted-foreground/50"}`}>
+            <span className="pricing-feature-text">
               {f.text}
             </span>
           </div>
@@ -122,11 +119,7 @@ const PricingCard = ({ plan, index, inView }: { plan: typeof plans[0]; index: nu
           setSelected(true);
           setTimeout(() => setSelected(false), 1200);
         }}
-        className={`w-full py-4 rounded-xl font-bold transition-all duration-300 ${
-          plan.popular
-            ? "btn-primary"
-            : "btn-outline-primary"
-        } ${selected ? "animate-check-morph" : ""}`}
+        className={`pricing-button ${plan.popular ? "primary" : "outline"} ${selected ? "selected" : ""}`}
       >
         <AnimatePresence mode="wait">
           {selected ? (
@@ -159,21 +152,21 @@ const PricingSection = () => {
   const { ref, inView } = useInView();
 
   return (
-    <section id="pricing" className=" w-full py-24 border-t border-border">
-      <div className="max-w-[1280px] mx-auto px-4 md:px-10">
-        <div className="text-center mb-16">
-          <p className="text-primary font-bold uppercase tracking-wider text-sm mb-2">Plans & Pricing</p>
+    <section id="pricing" className="pricing-section">
+      <div className="pricing-wrapper">
+        <div className="pricing-header">
+          <p className="pricing-label">Plans & Pricing</p>
           <StaggerText
             text="Choose Your Security Level"
             as="h3"
-            className="text-foreground text-3xl md:text-5xl font-bold mb-4"
+            className="pricing-title"
           />
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="pricing-description">
             Flexible protection tailored to your needs. Upgrade your privacy with the hardware and features that fit your lifestyle.
           </p>
         </div>
 
-        <div ref={ref} className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div ref={ref} className="pricing-cards">
           {plans.map((plan, i) => (
             <PricingCard key={plan.name} plan={plan} index={i} inView={inView} />
           ))}

@@ -1,0 +1,133 @@
+/* How It Works Section Styles */
+.how-it-works-section {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 768px) {
+  .how-it-works-section {
+    padding: 0 2.5rem;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+.how-it-works-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .how-it-works-header {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+.how-it-works-title-section {
+  max-width: 42rem;
+}
+
+.how-it-works-label {
+  color: var(--primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.how-it-works-doc-link {
+  display: none;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+@media (min-width: 768px) {
+  .how-it-works-doc-link {
+    display: flex;
+  }
+}
+
+.how-it-works-doc-link:hover {
+  color: var(--primary-glow);
+}
+
+.how-it-works-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .how-it-works-steps {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+.how-it-works-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.how-it-works-card.card-surface-hover {
+  border-radius: 0.5rem;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+}
+
+.how-it-works-card.card-surface-hover:hover {
+  border-color: var(--muted-foreground);
+  background-color: var(--card);
+}
+
+.how-it-works-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  background-color: rgba(var(--primary-rgb), 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+  box-shadow: inset 0 0 0 1px rgba(var(--primary-rgb), 0.2);
+  transition: all 0.3s ease;
+}
+
+.how-it-works-icon:hover {
+  background-color: rgba(var(--primary-rgb), 0.18);
+}
+
+.how-it-works-icon svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.how-it-works-card-title {
+  color: var(--foreground);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.how-it-works-card-desc {
+  color: var(--muted-foreground);
+  line-height: 1.625;
+}
