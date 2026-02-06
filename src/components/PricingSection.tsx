@@ -159,7 +159,7 @@ const PricingSection = () => {
   const { ref, inView } = useInView();
 
   return (
-    <section id="pricing" className="section-snap w-full py-24 border-t border-border">
+    <section id="pricing" className=" w-full py-24 border-t border-border">
       <div className="max-w-[1280px] mx-auto px-4 md:px-10">
         <div className="text-center mb-16">
           <p className="text-primary font-bold uppercase tracking-wider text-sm mb-2">Plans & Pricing</p>

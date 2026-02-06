@@ -14,7 +14,7 @@ const UseCasesSection = () => {
   const { ref, inView } = useInView();
 
   return (
-    <section id="use-cases" className="section-snap w-full py-20 border-y border-border/50 bg-surface-elevated">
+    <section id="use-cases" className=" w-full py-20 border-y border-border/50 bg-surface-elevated">
       <div className="max-w-[1280px] mx-auto px-4 md:px-10">
         <div className="text-center mb-16">
           <StaggerText

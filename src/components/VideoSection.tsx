@@ -7,7 +7,7 @@ const VideoSection = () => {
   const { ref, inView } = useInView();
 
   return (
-    <section className="section-snap w-full py-16 border-y border-border/50 bg-surface-elevated">
+    <section className=" w-full py-16 border-y border-border/50 bg-surface-elevated">
       <div ref={ref} className="max-w-[960px] mx-auto px-4 md:px-10 flex flex-col gap-8 text-center">
         <motion.div
           className="flex flex-col gap-2"

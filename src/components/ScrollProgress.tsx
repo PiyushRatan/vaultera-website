@@ -1,4 +1,5 @@
 import { useScrollDirection } from "@/hooks/useScrollDirection";
+import "../styles/scrollProgress.css";
 
 const ScrollProgress = () => {
   const { scrollProgress } = useScrollDirection();

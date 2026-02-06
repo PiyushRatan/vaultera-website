@@ -7,7 +7,7 @@ const HeroSection = () => {
   const { ref, inView } = useInView();
 
   return (
-    <section id="hero" className="section-snap min-h-screen flex items-center pt-20">
+    <section id="hero" className=" min-h-screen flex items-center pt-20">
       <div className="max-w-[1280px] mx-auto px-4 md:px-10 w-full py-12 md:py-20">
         <div ref={ref} className="flex flex-col lg:flex-row gap-12 items-center">
           <div className="flex-1 flex flex-col gap-6 text-center lg:text-left">

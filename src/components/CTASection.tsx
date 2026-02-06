@@ -9,7 +9,7 @@ const CTASection = () => {
   const [clicked, setClicked] = useState(false);
 
   return (
-    <section id="cta" className="section-snap w-full px-4 md:px-10 pb-12">
+    <section id="cta" className=" w-full px-4 md:px-10 pb-12">
       <div ref={ref} className="max-w-[1280px] mx-auto rounded-3xl overflow-hidden shadow-2xl relative border border-border bg-card">
 
         <motion.div
